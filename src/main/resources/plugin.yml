@@ -1,0 +1,6 @@
+name: TripleRiderHorse
+version: 1.0
+main: com.nonkungch.triplerider.TripleRiderPlugin
+api-version: 1.21 # กำหนดให้รองรับเวอร์ชัน 1.21+
+authors: NonKungCh
+description: Allows up to 3 players to ride a single horse, donkey, or mule.
