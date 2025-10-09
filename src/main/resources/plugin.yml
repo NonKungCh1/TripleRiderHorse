@@ -1,9 +1,9 @@
 name: TripleRiderHorse
-version: 1.0
+version: 1.0-SNAPSHOT
 main: com.nonkungch.triplerider.TripleRiderPlugin
 api-version: 1.21 
 authors: [NonKungCh]
-description: Allows multiple players to ride a single horse, configurable via max-riders and in-game commands.
+description: Allows multiple players to ride a single horse, configurable via max-riders.
 
 commands:
   triplerider:
