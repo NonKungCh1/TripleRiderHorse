@@ -37,7 +37,7 @@
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
-        </repositories>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -46,11 +46,10 @@
             <version>${api.version}</version>
             <scope>provided</scope>
         </dependency>
-        </dependencies>
+    </dependencies>
 
     <build>
         <defaultGoal>clean package</defaultGoal>
-        
         <finalName>${final.name}</finalName>
 
         <plugins>
@@ -89,5 +88,4 @@
             
         </plugins>
     </build>
-
 </project>
