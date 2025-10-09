@@ -17,32 +17,30 @@ public class HorseListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEntityEvent event) {
-        // 1. ตรวจสอบว่าเป็น Horse, Donkey หรือ Mule (รวมอยู่ใน AbstractHorse)
         if (!(event.getRightClicked() instanceof AbstractHorse horse)) {
             return;
         }
 
         Player player = event.getPlayer();
         
-        // 2. ป้องกันการคลิกถ้าผู้เล่นกำลังถืออาน (SADDLE) อยู่ เพื่อไม่ให้รบกวนการใส่/ถอดอาน
+        // ป้องกันการคลิกถ้าผู้เล่นกำลังถืออาน
         if (player.getInventory().getItemInMainHand().getType() == Material.SADDLE) {
             return;
         }
         
-        // 3. ม้าต้องมีคนขี่อยู่แล้ว (ผู้เล่นคนแรก) และคนขี่ต้องไม่ใช่ผู้เล่นที่คลิก
+        // ม้าต้องมีคนขี่อยู่แล้ว (ผู้เล่นคนแรก)
         if (horse.getPassengers().isEmpty() || horse.getPassengers().get(0) == player) {
             return;
         }
         
-        // 4. ลองเพิ่มผู้เล่นเป็นผู้โดยสาร
         boolean added = seatManager.addPassengerToHorse(horse, player);
         
         if (added) {
-            event.setCancelled(true); // ยกเลิกการคลิกมาตรฐาน
-            player.sendMessage("§a[TripleRider] You have joined the ride!");
+            event.setCancelled(true);
+            player.sendMessage("§a[TripleRider] คุณได้เข้าร่วมการเดินทาง!");
         } else {
-            // ถ้าที่นั่งเต็ม
-            player.sendMessage("§c[TripleRider] The horse is full! Maximum 3 riders.");
+            // ใช้ค่า Max Riders ล่าสุด
+            player.sendMessage("§c[TripleRider] ม้าเต็ม! จำนวนสูงสุด: " + seatManager.getMaxRiders() + " คน");
         }
     }
 }
