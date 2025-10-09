@@ -3,39 +3,38 @@ name: Maven Build and Artifact Upload
 # เงื่อนไขการสั่งให้ Action ทำงาน
 on:
   push:
-    branches: [ main, master ] # ทำงานทุกครั้งที่มีการ push เข้า branch main หรือ master
+    branches: [ main, master ]
   pull_request:
-    branches: [ main, master ] # ทำงานทุกครั้งที่มี Pull Request เข้ามา
+    branches: [ main, master ]
 
 jobs:
   build:
-    # รันบนระบบปฏิบัติการ Ubuntu
     runs-on: ubuntu-latest
     
     steps:
-      # 1. Checkout โค้ด: ดึงโค้ดทั้งหมดจาก Repository
+      # 1. Checkout โค้ด
       - name: Checkout Code
         uses: actions/checkout@v4
       
-      # 2. ตั้งค่า Java JDK: ใช้ JDK 17 ตามที่ระบุใน pom.xml
-      - name: Set up JDK 17
+      # 2. ตั้งค่า Java JDK: แก้ไขจาก 17 เป็น 21
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin' # แนะนำ Temurin
-          cache: maven # เปิดใช้งานการ Cache Dependencies ของ Maven เพื่อให้ Build เร็วขึ้น
+          java-version: '21' # ⭐️ แก้ไขตรงนี้เป็น 21
+          distribution: 'temurin'
+          cache: maven
 
-      # 3. Build Project: ใช้คำสั่ง Maven เพื่อ Build และ Package ไฟล์ .jar
-      # -B คือ --batch-mode เพื่อให้ทำงานใน Non-interactive mode (ดีสำหรับ CI)
-      # package คือ phase ที่สร้างไฟล์ .jar ในโฟลเดอร์ target/
+      # 3. Build Project
       - name: Build with Maven
         run: mvn -B package --file pom.xml
         
-      # 4. อัปโหลด Artifact: บันทึกไฟล์ .jar ที่ Build เสร็จแล้ว
+      # 4. อัปโหลด Artifact: ตรวจสอบชื่อไฟล์ JAR 
+      # (TripleRiderHorse-1.0-SNAPSHOT.jar)
       - name: Upload Plugin Artifact
         uses: actions/upload-artifact@v4
         with:
           name: TripleRiderHorse-Plugin
-          # ต้องระบุชื่อไฟล์ .jar ให้ตรงกับที่ pom.xml สร้าง (ArtifactId-Version.jar)
-          path: target/TripleRiderHorse-1.0.jar 
-          retention-days: 7 # เก็บไฟล์ไว้ 7 วัน
+          # ⭐️ แก้ไขชื่อไฟล์ให้ตรงกับ Version ที่ระบุใน pom.xml
+          path: target/TripleRiderHorse-1.0-SNAPSHOT.jar 
+       
+   retention-days: 7
