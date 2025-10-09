@@ -23,12 +23,10 @@ public class HorseListener implements Listener {
 
         Player player = event.getPlayer();
         
-        // ป้องกันการคลิกถ้าผู้เล่นกำลังถืออาน
         if (player.getInventory().getItemInMainHand().getType() == Material.SADDLE) {
             return;
         }
         
-        // ม้าต้องมีคนขี่อยู่แล้ว (ผู้เล่นคนแรก)
         if (horse.getPassengers().isEmpty() || horse.getPassengers().get(0) == player) {
             return;
         }
@@ -39,7 +37,6 @@ public class HorseListener implements Listener {
             event.setCancelled(true);
             player.sendMessage("§a[TripleRider] คุณได้เข้าร่วมการเดินทาง!");
         } else {
-            // ใช้ค่า Max Riders ล่าสุด
             player.sendMessage("§c[TripleRider] ม้าเต็ม! จำนวนสูงสุด: " + seatManager.getMaxRiders() + " คน");
         }
     }

@@ -76,7 +76,6 @@ public class TripleRiderCommand implements CommandExecutor, TabCompleter {
             return StringUtil.copyPartialMatches(args[0], Arrays.asList("reload", "setmax"), new ArrayList<>());
         }
         if (args.length == 2 && args[0].equalsIgnoreCase("setmax")) {
-            // แนะนำจำนวนสูงสุดปัจจุบันเป็นตัวช่วย
             return StringUtil.copyPartialMatches(args[1], Collections.singletonList(String.valueOf(plugin.getSeatManager().getMaxRiders())), new ArrayList<>());
         }
         return Collections.emptyList();

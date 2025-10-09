@@ -20,7 +20,7 @@ public class TripleRiderPlugin extends JavaPlugin {
         // 3. ลงทะเบียน Listener
         getServer().getPluginManager().registerEvents(new HorseListener(this.seatManager), this);
         
-        // 4. ลงทะเบียน Command Executor (ใช้สำหรับจัดการคำสั่งในเกม)
+        // 4. ลงทะเบียน Command Executor
         getCommand("triplerider").setExecutor(new TripleRiderCommand(this));
         getCommand("triplerider").setTabCompleter(new TripleRiderCommand(this));
     }
@@ -31,13 +31,8 @@ public class TripleRiderPlugin extends JavaPlugin {
         this.seatManager.cleanupAllSeats();
     }
     
-    /**
-     * โหลด config.yml ใหม่และอัปเดต SeatManager
-     */
     public void loadPluginConfig() {
-        // สร้าง config.yml ถ้าไม่มี
         saveDefaultConfig();
-        // โหลดค่าจากไฟล์ซ้ำ
         reloadConfig();
         
         if (this.seatManager != null) {
@@ -47,18 +42,14 @@ public class TripleRiderPlugin extends JavaPlugin {
         }
     }
     
-    /**
-     * ตั้งค่า Max Riders ใหม่ทั้งใน config และ SeatManager (ใช้สำหรับคำสั่งในเกม)
-     */
     public void setMaxRiders(int newMax) {
-        // อัปเดตไฟล์ config ในหน่วยความจำและบันทึกลงดิสก์
         getConfig().set("max-riders", newMax);
         saveConfig();
         
-        // อัปเดต SeatManager ที่กำลังทำงานอยู่
         if (this.seatManager != null) {
             this.seatManager.setMaxRiders(newMax);
         }
+        getLogger().info("Max Riders set to " + newMax + " via command.");
     }
     
     public SeatManager getSeatManager() {
