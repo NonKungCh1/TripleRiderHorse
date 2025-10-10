@@ -1,58 +1,32 @@
 package com.nonkungch.triplerider;
 
+import com.nonkungch.triplerider.commands.TripleRiderCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class TripleRiderPlugin extends JavaPlugin {
+public final class TripleRiderHorse extends JavaPlugin {
 
-    private SeatManager seatManager;
+    private LangManager langManager;
 
     @Override
     public void onEnable() {
-        // 1. โหลดคอนฟิก
-        loadPluginConfig(); 
+        // บันทึก config.yml
+        saveDefaultConfig(); 
         
-        // 2. โหลดค่า Max Riders และ Initialize SeatManager
-        int maxRiders = getConfig().getInt("max-riders", 3);
-        this.seatManager = new SeatManager(this, maxRiders);
+        // 1. โหลด LangManager (อยู่ใน package หลักแล้ว)
+        this.langManager = new LangManager(this);
         
-        getLogger().info("TripleRiderHorse has been enabled. Max Riders: " + maxRiders);
+        // 2. ตั้งค่า Command
+        getCommand("triplerider").setExecutor(new TripleRiderCommand(this)); 
         
-        // 3. ลงทะเบียน Listener
-        getServer().getPluginManager().registerEvents(new HorseListener(this.seatManager), this);
-        
-        // 4. ลงทะเบียน Command Executor
-        getCommand("triplerider").setExecutor(new TripleRiderCommand(this));
-        getCommand("triplerider").setTabCompleter(new TripleRiderCommand(this));
+        getLogger().info("TripleRiderHorse (v" + getDescription().getVersion() + ") enabled!");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("TripleRiderHorse is shutting down. Cleaning up temporary seats...");
-        this.seatManager.cleanupAllSeats();
+        getLogger().info("TripleRiderHorse disabled.");
     }
-    
-    public void loadPluginConfig() {
-        saveDefaultConfig();
-        reloadConfig();
-        
-        if (this.seatManager != null) {
-            int newMaxRiders = getConfig().getInt("max-riders", 3);
-            this.seatManager.setMaxRiders(newMaxRiders);
-            getLogger().info("Configuration reloaded. New Max Riders: " + newMaxRiders);
-        }
-    }
-    
-    public void setMaxRiders(int newMax) {
-        getConfig().set("max-riders", newMax);
-        saveConfig();
-        
-        if (this.seatManager != null) {
-            this.seatManager.setMaxRiders(newMax);
-        }
-        getLogger().info("Max Riders set to " + newMax + " via command.");
-    }
-    
-    public SeatManager getSeatManager() {
-        return seatManager;
+
+    public LangManager getLangManager() {
+        return langManager;
     }
 }
