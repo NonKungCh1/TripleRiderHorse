@@ -1,7 +1,7 @@
 package com.nonkungch.triplerider;
 
 import org.bukkit.entity.Player;
-import org.geysermc.floodgate.api.FloodgateApi;
+import org.geysermc.floodgate.api.FloodgateApi; // ⭐️ Floodgate จะถูกหาเจอเมื่อแก้ pom.xml
 
 public class MobileSupport {
 

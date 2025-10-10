@@ -1,7 +1,7 @@
 package com.nonkungch.triplerider;
 
 import com.nonkungch.triplerider.TripleRiderHorse;
-import com.nonkungch.triplerider.MobileSupport; // คลาส MobileSupport ถูกย้ายมา package หลัก
+import com.nonkungch.triplerider.MobileSupport; // ⭐️ import ถูกต้อง เพราะ MobileSupport อยู่ใน package หลัก
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

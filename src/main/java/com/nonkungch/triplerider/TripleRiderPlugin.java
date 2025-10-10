@@ -1,6 +1,6 @@
 package com.nonkungch.triplerider;
 
-import com.nonkungch.triplerider.commands.TripleRiderCommand;
+import com.nonkungch.triplerider.TripleRiderCommand; // ⭐️ ต้องมีโฟลเดอร์ commands/
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TripleRiderHorse extends JavaPlugin {
