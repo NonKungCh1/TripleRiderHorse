@@ -9,10 +9,10 @@ import org.bukkit.Material;
 
 public class HorseListener implements Listener {
 
-    private final SeatManager seatManager;
+    private final TripleRiderHorse plugin; // ⭐️ เปลี่ยนเป็นเก็บ plugin instance
 
-    public HorseListener(SeatManager seatManager) {
-        this.seatManager = seatManager;
+    public HorseListener(TripleRiderHorse plugin) { // ⭐️ เปลี่ยน Constructor
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -31,13 +31,25 @@ public class HorseListener implements Listener {
             return;
         }
         
-        boolean added = seatManager.addPassengerToHorse(horse, player);
+        // ใช้ SeatManager จาก plugin instance
+        boolean added = plugin.getSeatManager().addPassengerToHorse(horse, player);
         
         if (added) {
             event.setCancelled(true);
-            player.sendMessage("§a[TripleRider] คุณได้เข้าร่วมการเดินทาง!");
+            // ⭐️ ใช้ LangManager สำหรับข้อความสำเร็จ
+            plugin.getLangManager().sendMessage(player, "info_rider_success"); 
         } else {
-            player.sendMessage("§c[TripleRider] ม้าเต็ม! จำนวนสูงสุด: " + seatManager.getMaxRiders() + " คน");
+            // ⭐️ ใช้ LangManager สำหรับข้อความเต็ม
+            String lang = plugin.getLangManager().getPlayerLangCode(player);
+            String messageKey = "error_max_riders_reached";
+            
+            // ดึงข้อความดิบและแทนที่ {max} ด้วยตัวเลขสูงสุด
+            String rawMessage = plugin.getLangManager().getMessage(lang, messageKey);
+            rawMessage = rawMessage.replace("{max}", String.valueOf(plugin.getSeatManager().getMaxRiders()));
+            
+            String prefix = plugin.getLangManager().getMessage(lang, "prefix");
+            
+            player.sendMessage(prefix + rawMessage);
         }
     }
 }
