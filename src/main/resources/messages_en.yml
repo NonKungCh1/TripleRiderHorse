@@ -1,0 +1,11 @@
+# messages_en.yml
+prefix: "&8[&bTripleRider&8] &r"
+
+command_success_enabled: "Triple riding mode &aenabled&r."
+command_success_disabled: "Triple riding mode &cdisabled&r."
+error_no_permission: "&cYou do not have permission to use this command."
+error_player_only: "&cThis command can only be run by a player."
+error_unknown_command: "&cUnknown command. Use /triplerider toggle."
+
+# Mobile Support
+info_use_command_instead: "&eGUI is currently unsupported on Mobile (Bedrock). Please use /triplerider toggle."

@@ -1,0 +1,11 @@
+# messages_th.yml
+prefix: "&8[&bTripleRider&8] &r"
+
+command_success_enabled: "โหมดขี่สามคน &aเปิด&r ใช้งานแล้ว"
+command_success_disabled: "โหมดขี่สามคน &cปิด&r ใช้งานแล้ว"
+error_no_permission: "&cคุณไม่มีสิทธิ์ใช้คำสั่งนี้"
+error_player_only: "&cคำสั่งนี้ใช้ได้เฉพาะผู้เล่นเท่านั้น"
+error_unknown_command: "&cคำสั่งไม่ถูกต้อง. ใช้ /triplerider toggle"
+
+# Mobile Support
+info_use_command_instead: "&eเมนู (GUI) ยังไม่รองรับบนมือถือ (Bedrock). กรุณาใช้คำสั่ง /triplerider toggle"
