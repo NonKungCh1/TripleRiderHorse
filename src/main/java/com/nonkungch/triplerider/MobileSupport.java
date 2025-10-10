@@ -1,19 +1,23 @@
 package com.nonkungch.triplerider;
 
 import org.bukkit.entity.Player;
-import org.geysermc.floodgate.api.FloodgateApi; // ⭐️ Floodgate จะถูกหาเจอเมื่อแก้ pom.xml
+import org.geysermc.floodgate.api.FloodgateApi;
 
 public class MobileSupport {
 
     public static boolean isBedrockPlayer(Player player) {
         try {
-            // ต้องมีการติดตั้ง Floodgate API บนเซิร์ฟเวอร์
-            if (!FloodgateApi.getInstance().isEnabled()) {
-                return false;
+            // ไม่ต้องตรวจสอบ isEnabled() อีกต่อไป
+            // ถ้า FloodgateApi.getInstance() ไม่เป็น null ก็ให้ตรวจสอบผู้เล่น
+            FloodgateApi api = FloodgateApi.getInstance();
+            if (api == null) {
+                 return false;
             }
-            return FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId());
+            
+            return api.isFloodgatePlayer(player.getUniqueId());
+            
         } catch (NoClassDefFoundError | Exception e) {
-            // เกิดข้อผิดพลาดหาก Floodgate ไม่ได้ถูกโหลด
+            // เกิดข้อผิดพลาดหาก Floodgate ไม่ได้ถูกโหลด/ติดตั้ง
             return false;
         }
     }

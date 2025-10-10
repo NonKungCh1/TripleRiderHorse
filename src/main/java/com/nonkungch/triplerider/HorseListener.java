@@ -9,9 +9,9 @@ import org.bukkit.Material;
 
 public class HorseListener implements Listener {
 
-    private final TripleRiderHorse plugin; // ⭐️ เปลี่ยนเป็นเก็บ plugin instance
+    private final TripleRiderHorse plugin; // เปลี่ยนเป็นเก็บ plugin instance
 
-    public HorseListener(TripleRiderHorse plugin) { // ⭐️ เปลี่ยน Constructor
+    public HorseListener(TripleRiderHorse plugin) { // เปลี่ยน Constructor
         this.plugin = plugin;
     }
 
@@ -23,10 +23,12 @@ public class HorseListener implements Listener {
 
         Player player = event.getPlayer();
         
+        // ไม่ทำงานหากผู้เล่นถืออานม้า
         if (player.getInventory().getItemInMainHand().getType() == Material.SADDLE) {
             return;
         }
         
+        // ไม่ทำงานหากม้าไม่มีผู้ขี่ หรือผู้เล่นคนแรกคือผู้ที่คลิกเอง
         if (horse.getPassengers().isEmpty() || horse.getPassengers().get(0) == player) {
             return;
         }
@@ -36,10 +38,10 @@ public class HorseListener implements Listener {
         
         if (added) {
             event.setCancelled(true);
-            // ⭐️ ใช้ LangManager สำหรับข้อความสำเร็จ
+            // ใช้ LangManager สำหรับข้อความสำเร็จ
             plugin.getLangManager().sendMessage(player, "info_rider_success"); 
         } else {
-            // ⭐️ ใช้ LangManager สำหรับข้อความเต็ม
+            // ใช้ LangManager สำหรับข้อความเต็ม (แจ้งจำนวนผู้ขี่สูงสุด)
             String lang = plugin.getLangManager().getPlayerLangCode(player);
             String messageKey = "error_max_riders_reached";
             

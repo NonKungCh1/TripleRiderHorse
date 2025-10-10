@@ -21,7 +21,6 @@ public class LangManager {
     }
 
     private void loadLanguages() {
-        // โหลดภาษาที่รองรับ
         loadLangFile("en"); 
         loadLangFile("th");
     }
@@ -31,7 +30,6 @@ public class LangManager {
         
         if (!langFile.exists()) {
             try {
-                // บันทึกไฟล์จาก JAR ไปยังโฟลเดอร์ปลั๊กอิน
                 plugin.saveResource("messages_" + lang + ".yml", false);
             } catch (IllegalArgumentException e) {
                 plugin.getLogger().warning("Could not find messages_" + lang + ".yml in the JAR. Skipping language.");
@@ -44,8 +42,8 @@ public class LangManager {
         plugin.getLogger().info("Loaded language file: messages_" + lang + ".yml");
     }
     
-    // ดึงรหัสภาษาของผู้เล่น (พยายามใช้ Locale ของผู้เล่น)
-    private String getPlayerLangCode(Player player) {
+    // ดึงรหัสภาษาของผู้เล่น (แก้ไข: เปลี่ยนเป็น public)
+    public String getPlayerLangCode(Player player) { 
         String locale = player.getLocale();
         if (locale != null) {
             String langCode = locale.toLowerCase(Locale.ROOT).substring(0, 2);
