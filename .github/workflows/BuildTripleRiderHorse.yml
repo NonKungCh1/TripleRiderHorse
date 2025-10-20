@@ -27,13 +27,17 @@ jobs:
       # 3. Build Project ด้วย Maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-        
-      # 4. อัปโหลด Artifact: แก้ไขชื่อไฟล์ JAR และการเยื้อง
-      - name: Upload Plugin Artifact
+
+      # 4. ค้นหา JAR Artifact
+      - name: Find Artifact JAR
+        id: find_jar
+        run: |
+          echo "JAR_PATH=$(find target/ -name 'TripleRiderHorse-Plugin-*.jar' -print -quit)" >> $GITHUB_ENV
+
+      # 5. Upload Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: TripleRiderHorse-Plugin
-          # ⭐️ แก้ไข: ชื่อไฟล์ JAR ที่ถูกต้องคือ TripleRiderHorse-1.0-SNAPSHOT.jar
-          path: target/TripleRiderHorse-1.0-SNAPSHOT.jar 
-          # กำหนดระยะเวลาเก็บ Artifact และปรับการเยื้องให้ถูกต้อง
-          retention-days: 7
+          path: ${{ env.JAR_PATH }}
+          if-no-files-found: error
