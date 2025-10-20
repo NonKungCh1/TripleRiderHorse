@@ -9,9 +9,9 @@ import org.bukkit.Material;
 
 public class HorseListener implements Listener {
 
-    private final TripleRiderHorse plugin; // เปลี่ยนเป็นเก็บ plugin instance
+    private final TripleRiderHorse plugin;
 
-    public HorseListener(TripleRiderHorse plugin) { // เปลี่ยน Constructor
+    public HorseListener(TripleRiderHorse plugin) {
         this.plugin = plugin;
     }
 
@@ -22,6 +22,13 @@ public class HorseListener implements Listener {
         }
 
         Player player = event.getPlayer();
+        
+        // ⭐️ แก้ไข: ผู้เล่น Bedrock (มือถือ) ต้องใช้คำสั่ง /triplerider เพื่อขึ้นม้าซ้อน
+        if (MobileSupport.isBedrockPlayer(player)) {
+            // หยุดการประมวลผลการคลิกขวา เพื่อบังคับให้ผู้เล่นมือถือใช้คำสั่งแทน
+            // ข้อความแจ้งจะไปอยู่ใน TripleRiderCommand
+            return; 
+        }
         
         // ไม่ทำงานหากผู้เล่นถืออานม้า
         if (player.getInventory().getItemInMainHand().getType() == Material.SADDLE) {
